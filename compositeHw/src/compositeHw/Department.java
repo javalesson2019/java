@@ -1,8 +1,10 @@
 package compositeHw;
 
 public class Department extends Component {
+
 	public Department(String name) {
-		this.name = name;
+		// this.name = name;
+		super(name);
 	}
 
 	@Override
@@ -19,11 +21,4 @@ public class Department extends Component {
 	public Component remove(Component menuComponent) {
 		throw new UnsupportedOperationException("cannot remove");
 	}
-
-	@Override
-	public String showReport() {
-		String report = "report on " + name +" was made " + java.time.LocalDate.now().toString();
-		return report;
-	}
-	
 }
