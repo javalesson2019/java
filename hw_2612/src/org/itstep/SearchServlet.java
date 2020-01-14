@@ -17,9 +17,17 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class SearchServlet
  */
-@WebServlet("/SearchServlet")
+@WebServlet("/SearchServlet") // в задании привязать к конечной точке search
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	static {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -34,19 +42,13 @@ public class SearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String first = request.getParameter("first");
+		String first = request.getParameter("first"); // в задании Добавить параметры first_name, last_name в которые
 		String last = request.getParameter("last");
 
 		String SELECT = "Select count(*) from people.person where first_name = '" + first + "' AND last_name='" + last
-				+ "';";
+				+ "';"; // что с sql инъекциями?
 
 		int count = 0;
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 
 		try (Connection conn = DriverManager.getConnection(
 				"jdbc:mysql://localhost/people?serverTimezone=Europe/Kiev&amp;characterEncoding=utf8", "root", "")) {
